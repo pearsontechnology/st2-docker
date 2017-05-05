@@ -33,8 +33,17 @@ crudini --set ${ST2_CONF} messaging url \
 MISTRAL_CONF=/etc/mistral/mistral.conf
 
 crudini --set ${MISTRAL_CONF} DEFAULT transport_url \
-  rabbit://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}
+	rabbit://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}
 crudini --set ${MISTRAL_CONF} database connection \
-  postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+	postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
 
+CONSUL_CONF=/opt/stackstorm/configs/consul.yaml
+echo "---" >> ${CONSUL_CONF}
+echo "host: ${CONSUL_HOST}" >> ${CONSUL_CONF}
+echo "port: ${CONSUL_PORT}" >> ${CONSUL_CONF}
+echo "token: ${CONSUL_TOKEN}" >> ${CONSUL_CONF}
+echo "scheme: ${CONSUL_SCHEME}" >> ${CONSUL_CONF}
+echo "verify: ${CONSUL_VERIFY}" >> ${CONSUL_CONF}
+
+st2 pack install consul
 exec /sbin/init

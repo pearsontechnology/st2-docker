@@ -2,7 +2,7 @@ version: '3'
 
 services:
   stackstorm:
-    image: stackstorm/stackstorm:${TAG:-latest}
+    image: pearsontechnology/stackstorm:${TAG:-latest}
     cap_add:
       - SYS_ADMIN
     security_opt:
@@ -14,6 +14,7 @@ services:
       - conf/rabbitmq.env
       - conf/postgres.env
       - conf/redis.env
+      - conf/consul.env
     ports:
       - "443:443"
     networks:
@@ -60,12 +61,22 @@ services:
       - private
     volumes:
       - redis-volume:/data
+  consul:
+    image: consul:latest
+    container_name: consul
+    env_file:
+      - conf/consul.env
+    networks:
+      - private
+    volumes:
+      - redis-volume:/data
 
 volumes:
   mongo-volume:
   postgres-volume:
   rabbitmq-volume:
   redis-volume:
+  consul-volume:
 
 networks:
   public:
