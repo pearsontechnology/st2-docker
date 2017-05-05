@@ -69,7 +69,7 @@ services:
     networks:
       - private
     volumes:
-      - redis-volume:/data
+      - consul-volume:/data
 
 volumes:
   mongo-volume:
