@@ -45,5 +45,9 @@ echo "token: ${CONSUL_TOKEN}" >> ${CONSUL_CONF}
 echo "scheme: ${CONSUL_SCHEME}" >> ${CONSUL_CONF}
 echo "verify: ${CONSUL_VERIFY}" >> ${CONSUL_CONF}
 
-st2 pack install consul
+mkdir -p /home/stanley/.aws
+touch ${AWS_CREDENTIALS}
+crudini --set ${AWS_CREDENTIALS} default aws_access_key_id ${AWS_ACCESS_KEY_ID}
+crudini --set ${AWS_CREDENTIALS} detault aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+
 exec /sbin/init
