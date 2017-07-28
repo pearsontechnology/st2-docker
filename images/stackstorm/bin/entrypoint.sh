@@ -45,6 +45,13 @@ echo "token: ${CONSUL_TOKEN}" >> ${CONSUL_CONF}
 echo "scheme: ${CONSUL_SCHEME}" >> ${CONSUL_CONF}
 echo "verify: ${CONSUL_VERIFY}" >> ${CONSUL_CONF}
 
+VAULT_CONF=/opt/stackstorm/configs/vault.yaml
+echo "---" >> ${VAULT_CONF}
+echo "url: ${VAULT_URL}" >> ${VAULT_CONF}
+echo "token: ${VAULT_DEV_ROOT_TOKEN_ID}" >> ${VAULT_CONF}
+echo "cert: ${VAULT_CERT}" >> ${VAULT_CONF}
+echo "verify: ${VAULT_VERIFY}" >> ${VAULT_CONF}
+
 mkdir -p ~/.aws
 touch ${AWS_CREDENTIALS}
 crudini --set ${AWS_CREDENTIALS} dev aws_access_key_id ${AWS_ACCESS_KEY_ID}
